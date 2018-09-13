@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Obesity Power!!!</title>
+</head>
+
+<body>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <script>
+        var canvas, canvasContext, imgAssests;
+
+        window.onload = function() {
+            canvas = document.getElementById('gameCanvas');
+            canvasContext = canvas.getContext('2d');
+            imgAssests = LoadImageAssests();
+
+            document.addEventListener('keyup', keyPressed);
+            document.addEventListener('keydown', keyReleased);
+
+
+
+            setInterval(mainLoop, 1000 / 50);
+        }
+
+        var diebetoXpos = 0;
+        var diebetoYpos = 350;
+        var basketXpos = 0;
+        var basketYpos = 0;
+        var diabetoXspeed = 3;
+
+        const RIGHT_KEY = 65;
+        const LEFT_KEY = 68;
+        var rightKeyPressed = false;
+        var leftKeyPressed = false;
+
+        function mainLoop() {
+            colorRect(0, 0, canvas.width, canvas.height, 'black');
+            drawSprite(imgs.player, diebetoXpos, diebetoYpos, 50, 50);
+            drawSprite(imgs.basket, basketXpos, basketYpos, 50, 50);
+            move();
+
+        }
+
+        function LoadImageAssests() { //importing all image assests as img objects
+            imgs = {};
+            imgs.player = new Image();
+            imgs.player.src = 'Images/diebeto.png'
+
+            imgs.basket = new Image();
+            imgs.basket.src = 'Images/basket.png'
+
+
+            return imgs;
+        }
+
+        function keyPressed(evt) {
+            if (evt.keyCode == RIGHT_KEY) {
+                rightKeyPressed = true;
+            }
+            if (evt.keyCode == LEFT_KEY) {
+                leftKeyPressed = true;
+            }
+
+
+
+        }
+
+        function keyReleased(evt) {
+            if (evt.keyCode == RIGHT_KEY) {
+                rightKeyPressed = false;
+            }
+            if (evt.keyCode == LEFT_KEY) {
+                leftKeyPressed = false;
+            }
+        }
+        
+        function move() {
+            if (leftKeyPressed) {
+                diebetoXpos -= diabetoXspeed;
+            }
+            
+            if (rightKeyPressed) {
+                diebetoXpos += diabetoXspeed;
+            }
+        }
+
+        function drawSprite(src, x, y, w, h) {
+            canvasContext.drawImage(src, x, y, w, h);
+
+        }
+
+        function colorRect(x, y, w, h, c) {
+            canvasContext.fillStyle = c;
+            canvasContext.fillRect(x, y, w, h);
+        }
+
+    </script>
+</body>
+
+</html>
